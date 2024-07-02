@@ -9,17 +9,25 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * The type Fitness service.
+ */
 @Service
 public class FitnessService implements FitnessServiceInterface {
 
   private final FakeFitnessDatabase database;
 
+  /**
+   * Instantiates a new Fitness service.
+   *
+   * @param database the database
+   */
   @Autowired
   public FitnessService(FakeFitnessDatabase database) {
     this.database = database;
   }
 
-  private WorkoutDto transformWorkoutToWotkoutDTO(Workout workout) {
+  private WorkoutDto transformWorkoutToWotkoutDto(Workout workout) {
     WorkoutDto result = new WorkoutDto(workout.getId(), workout.getName(),
         workout.getRepetitions());
     return result;
@@ -32,7 +40,7 @@ public class FitnessService implements FitnessServiceInterface {
     workout.setRepetitions(newWorkoutDto.repetitions());
     workout.setSecretTechnique(newWorkoutDto.secretTechnique());
     Workout response = database.saveWorkout(workout);
-    WorkoutDto workoutDto = transformWorkoutToWotkoutDTO(response);
+    WorkoutDto workoutDto = transformWorkoutToWotkoutDto(response);
     return workoutDto;
   }
 
@@ -42,7 +50,7 @@ public class FitnessService implements FitnessServiceInterface {
     if (result.isEmpty()) {
       return Optional.empty();
     }
-    WorkoutDto workout = transformWorkoutToWotkoutDTO(result.get());
+    WorkoutDto workout = transformWorkoutToWotkoutDto(result.get());
     return Optional.of(workout);
   }
 
