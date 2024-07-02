@@ -3,6 +3,7 @@ package com.betrybe.fitness.controller;
 import com.betrybe.fitness.dto.WorkoutCreationDto;
 import com.betrybe.fitness.dto.WorkoutDto;
 import com.betrybe.fitness.service.FitnessService;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,5 +69,16 @@ public class FitnessController implements FitnessControllerInterface {
   public ResponseEntity<WorkoutDto> createWorkout(@RequestBody WorkoutCreationDto workout) {
     WorkoutDto response = service.saveWorkout(workout);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
+  }
+
+  /**
+   * Gets all workouts.
+   *
+   * @return the all workouts
+   */
+  @GetMapping("/workouts")
+  public ResponseEntity<List<WorkoutDto>> getAllWorkouts() {
+    List<WorkoutDto> workouts = service.getAllWorkouts();
+    return ResponseEntity.ok(workouts);
   }
 }
